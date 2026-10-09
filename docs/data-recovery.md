@@ -55,7 +55,8 @@ dd if=full_disk.img bs=1048576 skip=1000 count=10 | md5 -q
 `debugfs -R "lsdel"` on the ext4 image finds nothing on a phone that was
 wiped (the wipe resets the inode tables). The deleted data blocks
 themselves survive until overwritten, so signature carving over the raw
-image is the only route. PhotoRec 7.2 refuses to run without a terminal
+image is the only route. [PhotoRec](https://www.cgsecurity.org/wiki/PhotoRec)
+7.2 refuses to run without a terminal
 and its `/cmd` non-interactive mode aborts without writing files;
 `scripts/carver.py` covers the common formats instead (JPEG, PNG, MP4
 family via ISO atom walking, PDF, SQLite, AMR, GIF), deduplicates by md5,

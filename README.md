@@ -39,8 +39,10 @@ pull and carve user data         docs/data-recovery.md
 
 2. **The kernel needs the `gpt` cmdline flag.** On this platform the eMMC's
    LBA0 holds Intel OSIP data, not a protective MBR. Linux 3.10's GPT parser
-   (`block/partitions/efi.c`) refuses to even read the GPT unless the boot
-   cmdline contains `gpt` (sets `force_gpt`). The stock boot chain supplies
+   (`block/partitions/efi.c` in
+   [Zenfone-Dev/android_kernel_asus_T00F](https://github.com/Zenfone-Dev/android_kernel_asus_T00F))
+   refuses to even read the GPT unless the boot cmdline contains `gpt` (sets
+   `force_gpt`). The stock boot chain supplies
    this; the replacement droidboot we flash does not. Without it the kernel
    reports `unknown partition table`, init falls back to a tmpfs `/data`,
    and nothing mounts. Appending ` gpt` to the boot image's cmdline fixes
@@ -48,7 +50,8 @@ pull and carve user data         docs/data-recovery.md
 
 3. **The stock boot image can be patched in place.** The boot image format
    (`$OS$` header, parsed by `unpack_intel`/`pack_intel` from
-   shakalaca's ZenFone-boot-tools) carries the kernel, a gzip cpio ramdisk,
+   [shakalaca's ZenFone-boot-tools](https://github.com/shakalaca/ZenFone-boot-tools))
+   carries the kernel, a gzip cpio ramdisk,
    and the cmdline. Changing `ro.secure=0`, `ro.adb.secure=0` and
    `persist.sys.usb.config=mtp,adb` in the ramdisk's `default.prop` gives
    root adb on boot with no authorization prompt, so the lockscreen never
@@ -70,8 +73,12 @@ only the manifest.
   there can hard-brick the phone. Use files for the exact SKU (T00F, WW).
 - `/data` is never written by any step in this repo.
 
-## Credits
+## Credits and sources
 
-The repair flow is an adaptation of guides by rishav754, a8962383 (XDA
-debrick threads) and sigo's `asus-zenfone-5-root` scripts, reworked so that
-every step runs on macOS against a locked, half-bricked phone.
+- Intel xFSTK Downloader — [edison-fw/xFSTK](https://github.com/edison-fw/xFSTK) (patches to Intel's [SourceForge release](https://sourceforge.net/projects/xfstk/))
+- Debrick guides and the loader package — [Hard Bricked Zenfone Unbrick](https://xdaforums.com/t/hard-bricked-zenfone-unbrick-last-method-to-try.3131911/) (rishav754), [Debrick Asus Zenfone 5 with no fastboot, no recovery](https://xdaforums.com/t/debrick-asus-zenfoen-5-with-no-fastboot-no-recovery-and-ruined-partitions.3377455/) (a8962383), [MediaFire debrick folder](https://www.mediafire.com/folder/7qapfy4zqvxf6) ([SourceForge mirror](https://sourceforge.net/projects/unbrick-asus-zenfone-5/))
+- RAW firmware and soft-fuse extraction — [How to unbrick Asus Zenfone 5 stuck on Intel logo](https://andrewbenedictus.wordpress.com/2016/02/15/how-to-unbrick-asus-zenfone-5-stuck-on-intel-logo/) (Andrew Benedictus)
+- Unlock/root files — [sigo/asus-zenfone-5-root](https://github.com/sigo/asus-zenfone-5-root)
+- Boot image tools — [shakalaca/ZenFone-boot-tools](https://github.com/shakalaca/ZenFone-boot-tools)
+- TWRP for T00F — [TWRP 3.x for A500CG/A600CG](https://xdaforums.com/t/recovery-unofficial-twrp-3-0-2-0-asus-zenfone-5-a500cg-a600cg.3355749/) (X AnwarMov), [TWRP 3.1.1](https://xdaforums.com/t/recovery-unofficial-twrp-3-1-1-0-asus-zenfone-5.3657781/) (hungximbexx)
+- Platform source — [Zenfone-Dev](https://github.com/Zenfone-Dev) org, in particular [android_kernel_asus_T00F](https://github.com/Zenfone-Dev/android_kernel_asus_T00F)

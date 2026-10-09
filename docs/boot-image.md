@@ -1,7 +1,8 @@
 # Boot image format and patching
 
 The boot image format is documented by the source of
-`ZenFone-boot-tools` (shakalaca; `pack_intel`/`unpack_intel`), not by any
+[`ZenFone-boot-tools`](https://github.com/shakalaca/ZenFone-boot-tools)
+(shakalaca; `pack_intel`/`unpack_intel`), not by any
 official spec. This note records what the tools do and the on-disk layout
 as observed on a T00F, plus the two patches needed for root adb.
 
@@ -57,7 +58,7 @@ strings instead.
 To rebuild a flashable file from the on-disk bytes:
 
 1. Build a 0x400-byte header from a known-good stock boot image of the
-   same SKU (e.g. `boot_sign.bin` from the 1.17.40.16 RAW firmware).
+   same SKU (e.g. `boot_sign.bin` from the [1.17.40.16 RAW firmware](https://www.mediafire.com/file/b8fpeu26puk6l1d/Zenfone+5+_1.17.40.16_20140811_0963-user-fastboot-user.raw/file)).
 2. Keep bytes `0x08-0x2F` (identity) untouched — writing anything else
    there makes droidboot reject the flash with `flash_cmds error`.
 3. Set `sectors` at offset `0x30` to `filesize/512 - 1`.

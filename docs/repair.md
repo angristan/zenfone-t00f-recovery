@@ -69,8 +69,10 @@ Failure modes seen in practice:
   soft fuses (`RSUPHS` ack). The soft-fuse payload must come from the RAW
   firmware **of the same SKU** (T00F). A soft fuse from the wrong image
   fails with a signature error. The 880-byte `soft_fuse.bin` can be
-  extracted from ASUS's RAW firmware zip with HTTP range requests into the
-  zip's central directory, without downloading the 800 MB file.
+  extracted from [ASUS's RAW firmware zip](https://www.mediafire.com/file/b8fpeu26puk6l1d/Zenfone+5+_1.17.40.16_20140811_0963-user-fastboot-user.raw/file)
+  with HTTP range requests into the
+  zip's central directory, without downloading the 800 MB file
+  (see [Andrew Benedictus' guide](https://andrewbenedictus.wordpress.com/2016/02/15/how-to-unbrick-asus-zenfone-5-stuck-on-intel-logo/)).
 - Reconnect never succeeds — apply `scripts/patch-xfstk.sh` and retry.
 - Tool exits, phone shows `Intel Inside` then dies: the OS image signature
   check failed; use the exact `fastboot-2.19.img.pos.bin` from the debrick
@@ -89,8 +91,8 @@ fastboot flash fastboot files/root/fastboot.img   # unlocked droidboot, WW 2.22.
 fastboot reboot-bootloader
 ```
 
-The permanent droidboot comes from sigo's `asus-zenfone-5-root` repo (see
-manifest). After the reboot `fastboot devices` shows the real serial.
+The permanent droidboot comes from [sigo's `asus-zenfone-5-root`](https://github.com/sigo/asus-zenfone-5-root)
+repo (see manifest). After the reboot `fastboot devices` shows the real serial.
 
 ## 3. Unlock the bootloader
 
@@ -118,6 +120,9 @@ fastboot reboot recovery   # or select RECOVERY MODE in the droidboot menu
 
 TWRP's adb runs as root without authorization, but see `data-recovery.md`
 for why not to trust its eMMC reads. Reboot to droidboot when done.
+
+The TWRP build for T00F is unofficial — [X AnwarMov's XDA thread](https://xdaforums.com/t/recovery-unofficial-twrp-3-0-2-0-asus-zenfone-5-a500cg-a600cg.3355749/)
+for sources and updates.
 
 ## 5. Patch the boot image
 

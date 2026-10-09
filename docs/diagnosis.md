@@ -55,8 +55,9 @@ ioreg -p IOUSB -w 0 | grep -i CLOVERVIEW
 
 If step 3 shows `CLOVERVIEW`, the IFWI and the pre-boot download mode are
 healthy and the repair in `repair.md` will work. If not, the phone is in a
-deeper state than this repo covers (see the XDA "Hard Bricked Zenfone
-Unbrick" thread for the xFSTK + iSocUSB Windows route).
+deeper state than this repo covers (see the XDA [Hard Bricked Zenfone
+Unbrick](https://xdaforums.com/t/hard-bricked-zenfone-unbrick-last-method-to-try.3131911/)
+thread for the xFSTK + iSocUSB Windows route).
 
 ## Why not just use TWRP?
 
