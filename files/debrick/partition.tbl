@@ -1,0 +1,16 @@
+partition_table=gpt
+create -z /dev/block/mmcblk0
+create /dev/block/mmcblk0
+boot -p /dev/block/mmcblk0
+reload /dev/block/mmcblk0
+add -b 40 -s 262144 -t data -u 80868086-8086-8086-8086-000000000000 -l reserved -T 0 -P 0 /dev/block/mmcblk0
+add -b 262184 -s 16384 -t data -u 80868086-8086-8086-8086-000000000001 -l panic -T 0 -P 0 /dev/block/mmcblk0
+add -b 278568 -s 65536 -t data -u 80868086-8086-8086-8086-000000000002 -l factory -T 0 -P 0 /dev/block/mmcblk0
+add -b 344104 -s 16384 -t data -u 80868086-8086-8086-8086-000000000003 -l misc -T 0 -P 0 /dev/block/mmcblk0
+add -b 360488 -s 65536 -t data -u 80868086-8086-8086-8086-000000000004 -l config -T 0 -P 0 /dev/block/mmcblk0
+add -b 426024 -s 1048576 -t data -u 80868086-8086-8086-8086-000000000005 -l cache -T 0 -P 0 /dev/block/mmcblk0
+add -b 1474600 -s 393216 -t data -u 80868086-8086-8086-8086-000000000006 -l APD -T 0 -P 0 /dev/block/mmcblk0
+add -b 1867816 -s 65536 -t data -u 80868086-8086-8086-8086-000000000007 -l ADF -T 0 -P 0 /dev/block/mmcblk0
+add -b 1933352 -s 2662400 -t data -u 80868086-8086-8086-8086-000000000008 -l system -T 0 -P 0 /dev/block/mmcblk0
+add -b 4595752 -s $calc($lba_end-16384) -t data -u 80868086-8086-8086-8086-000000000009 -l data -T 0 -P 0 /dev/block/mmcblk0
+reload /dev/block/mmcblk0
